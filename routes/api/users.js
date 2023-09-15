@@ -16,4 +16,8 @@ router.get("/current", authenticate, ctrl.getCurrentUser);
 
 router.patch("/", authenticate, validateBody(schemas.updateStatusSchema), ctrl.updateStatusUser);
 
+router.post("/verify", ctrl.returnVerifyUser);
+
+router.get("/verify/:verificationToken", ctrl.verifyUser);
+
 module.exports = router;
