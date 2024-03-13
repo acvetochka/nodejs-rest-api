@@ -7,11 +7,11 @@
 
 Для кожної домашньої роботи створюйте свою гілку.
 
-- hw02
-- hw03
-- hw04
-- hw05
-- hw06
+- [hw02](https://github.com/acvetochka/nodejs-rest-api/tree/hw02-express)
+- [hw03](https://github.com/acvetochka/nodejs-rest-api/tree/03-mongodb)
+- [hw04](https://github.com/acvetochka/nodejs-rest-api/tree/04-auth)
+- [hw05](https://github.com/acvetochka/nodejs-rest-api/tree/hw05-avatars)
+- [hw06](https://github.com/acvetochka/nodejs-rest-api/tree/hw06-email)
 
 Кожна нова гілка для др повинна робитися з master
 
