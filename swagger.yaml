@@ -1,0 +1,324 @@
+openapi: 3.0.3
+info:
+  version: 1.0.0
+  title: Phonecontacts API
+  description: Swagger to work with the Goose Track backend.
+consumes:
+  - application/json
+produces:
+  - application/json
+servers:
+  - url: http://localhost:3000/api
+tags:
+  - name: Users
+  - name: Contacts
+paths:
+  /users/register:
+    post:
+      tags:
+        - Users
+      summary: Creat a new user
+      parameters: []
+      requestBody:
+        $ref: '#/components/requestBodies/RegisterUser'
+      responses:
+        '201':
+          $ref: '#/components/responses/UserIsRegistered'
+        '400':
+          $ref: '#/components/responses/errorBadRequesResponse'
+        '409':
+          $ref: '#/components/responses/errorEmailInUse'
+  /users/login:
+    post:
+      tags:
+        - Users
+      summary: Login user
+      parameters: []
+      requestBody:
+        $ref: '#/components/requestBodies/LoginUser'
+      responses:
+        '201':
+          $ref: '#/components/responses/UserIsAuthorized'
+        '400':
+          $ref: '#/components/responses/errorBadRequesResponse'
+        '401':
+          $ref: '#/components/responses/EmailIsUnverifited'
+  /users/logout:
+    post:
+      tags:
+        - Users
+      summary: Logout user
+      parameters: 
+        - in: header
+          name: Authorization
+          required: true
+          schema:
+            type: string
+      security:
+        - Bearer: []
+      responses:
+        '204':
+          description: Logout success
+          content: {}
+        '401':
+          description: Not authorized
+          content: {}
+  /users/verify:
+    post:
+      tags: 
+        - Users
+      summary: Send verification email
+      requestBody: 
+        $ref: '#/components/requestBodies/ReturnVerify'
+      responses: 
+        '200':
+          description: Verification email sent
+        '400':
+          description: "missing required field email || Verification has already been passed"
+          
+  /users/verify/{verificationToken}:
+    get:
+      tags:
+        - Users
+      summary: New user verification
+      parameters: 
+        - in: path
+          name: verificationToken
+          required: true
+          schema:
+            type: string
+      responses: 
+        '200':
+          description: Verification successful
+        '401':
+          description: User not found
+        
+  /users/current:
+    get:
+      tags:
+        - Users
+      summary: Get current user info
+      parameters: 
+        - in: header
+          name: Authorization
+          required: true
+          schema:
+            type: string
+      security:
+        - Bearer: []
+      requestBody: {}
+      responses:
+        '200':
+          $ref: '#/components/responses/CurrentUserResponse'
+        '401':
+          description: Not authorized
+          content: {}
+  /users/avatars:
+    patch:
+      tags:
+        - Users
+      summary: Update user avatar
+      parameters: 
+        - in: header
+          name: Authorization
+          required: true
+          schema:
+            type: string
+      security:
+        - Bearer: []
+      requestBody:
+        description: application/form-data
+        required: true
+        $ref: '#/components/requestBodies/UpdateAvatarRequest'
+      responses:
+        '200':
+          $ref: '#/components/responses/UpdateAvatarResponse'
+        '400':
+          $ref: '#/components/responses/errorBadRequesResponse'
+        '401':
+          description: Not authorized
+          content: {}
+          
+components:
+  schemas:
+  requestBodies:
+    RegisterUser:
+      description: Registration request parameters
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - email
+              - password
+            properties:
+              email:
+                type: string
+                description: Users email
+                format: email
+              password:
+                type: string
+                description: Users password
+                example: qwerty12345
+    LoginUser:
+      description: Request parameters for authorization
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - email
+              - password
+            properties:
+              email:
+                type: string
+                description: Users email
+                format: email
+              password:
+                type: string
+                description: Users password
+                example: qwerty12345
+    ReturnVerify:
+      description: Request parameters for verification
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              email:
+                type: string
+                description: User's email
+                format: email
+    UpdateAvatarRequest:
+      content:
+        multipart/form-data:
+          schema:
+            type: object
+            properties:
+              avatarURL:
+                type: file
+          
+  responses:
+    UserIsRegistered:
+      description: New User Registered
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              user:
+                type: object
+                properties:
+                  email:
+                    type: string
+                    description: Users email
+                    format: email
+                  subscription:
+                    type: string
+                    description: Users subscription
+                    example: starter
+                  avatarURL: 
+                    type: string
+                    description: Avatar URL
+                    example: "//www.gravatar.com/avatar/cbe239996693a90dec357d80c65848b7"
+    errorBadRequesResponse:
+      description: Validation error
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              status:
+                type: integer
+                description: Error status code
+                example: '400'
+              message:
+                type: string
+                description: Error message
+                example: Bad request
+    errorEmailInUse:
+      description: User with such email already exists
+      content: 
+        application/json:
+          schema:
+            type: object
+            properties:
+              status:
+                type: integer
+                description: Error status code
+                example: "409"
+              message: 
+                type: string
+                description: Error message
+                example: Email in use
+    UserIsAuthorized:
+      description: User Authorization
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              token:
+                type: string
+                description: Users token
+                example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzaWQiOiIyOWI4ZmZmNS0xN2NjLTQ5NTYtOTViZC1jN2U3N2FkZDEwOWEiLCJpYXQiOjE2ODE4OTM3MzEsImV4cCI6MTAwMDAwMDE2ODE4OTM3MzJ9.hQpNKIj4SR7Gm9waUMn7hzwKQyqwKrniL_qSW7SxrjM
+              user:
+                type: object
+                properties:
+                  email:
+                    type: string
+                    description: Users email
+                    format: email
+                  subscription:
+                    type: string
+                    description: Users subscription
+                    example: starter
+    EmailIsUnverifited:
+      description: Unauthorize
+      content: 
+        application/json:
+          schema: 
+            type: object
+            properties:
+              status:
+                type: integer
+                description: Error status code
+                example: '401'
+              message:
+                type: string
+                description: Error message
+                example: Please verify your email
+    CurrentUserResponse:
+      description: Successful operation
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              email:
+                type: string
+                description: User's email
+                format: email
+              subscription:
+                type: string
+                description: user subscription
+                example: starter
+    UpdateAvatarResponse:
+      description: Successful operation
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              avatarURL:
+                type: string
+                description: Avatar URL
+                example: http://res.cloudinary.com/photo.jpg
+  securitySchemes:
+    Bearer:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT

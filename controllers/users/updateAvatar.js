@@ -3,13 +3,19 @@ const fs = require("fs/promises");
 const Jimp = require("jimp");
 
 const { User } = require("../../models/user");
+const { HttpError } = require("../../helpers");
 
 const avatarsDir = path.join(__dirname, "../", "../", "public", "avatars");
 
 const updateAvatar = async (req, res) => {
   const { _id } = req.user;
-  const { path: tempUpload, originalname } = req.file;
+  // const file = req.file;
 
+  if (Object.keys(req.body).length === 0) {
+    throw HttpError(400, "missing file");
+  }
+
+  const { path: tempUpload, originalname } = req.file;
   const filename = `${_id}_${originalname}`;
   const resultUpload = path.join(avatarsDir, filename);
 
