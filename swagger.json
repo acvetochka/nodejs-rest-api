@@ -5,8 +5,6 @@
     "title": "Phonecontacts API",
     "description": "Swagger to work with the Goose Track backend."
   },
-  "consumes": ["application/json"],
-  "produces": ["application/json"],
   "servers": [
     {
       "url": "http://localhost:3000/api"
@@ -25,7 +23,6 @@
       "post": {
         "tags": ["Users"],
         "summary": "Creat a new user",
-        "parameters": [],
         "requestBody": {
           "$ref": "#/components/requestBodies/RegisterUser"
         },
@@ -46,7 +43,6 @@
       "post": {
         "tags": ["Users"],
         "summary": "Login user",
-        "parameters": [],
         "requestBody": {
           "$ref": "#/components/requestBodies/LoginUser"
         },
@@ -84,12 +80,10 @@
         ],
         "responses": {
           "204": {
-            "description": "Logout success",
-            "content": {}
+            "description": "Logout success"
           },
           "401": {
-            "description": "Not authorized",
-            "content": {}
+            "description": "Not authorized"
           }
         }
       }
@@ -154,14 +148,12 @@
             "Bearer": []
           }
         ],
-        "requestBody": {},
         "responses": {
           "200": {
             "$ref": "#/components/responses/CurrentUserResponse"
           },
           "401": {
-            "description": "Not authorized",
-            "content": {}
+            "description": "Not authorized"
           }
         }
       }
@@ -198,15 +190,231 @@
             "$ref": "#/components/responses/errorBadRequesResponse"
           },
           "401": {
-            "description": "Not authorized",
-            "content": {}
+            "description": "Not authorized"
+          }
+        }
+      }
+    },
+    "/contacts": {
+      "get": {
+        "tags": ["Contacts"],
+        "summary": "Get list of contacts",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "Authorization",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/GetListContactsResponse"
+          },
+          "401": {
+            "description": "Not authorized"
+          }
+        }
+      },
+      "post": {
+        "tags": ["Contacts"],
+        "summary": "Add contact",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "Authorization",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "requestBody": {
+          "$ref": "#/components/requestBodies/AddContactRequest"
+        },
+        "responses": {
+          "201": {
+            "$ref": "#/components/responses/AddContactResponse"
+          },
+          "400": {
+            "$ref": "#/components/responses/errorBadRequesResponse"
+          },
+          "401": {
+            "description": "Not authorized"
+          }
+        }
+      }
+    },
+    "/contacts/{contactId}": {
+      "get": {
+        "tags": ["Contacts"],
+        "summary": "Get contact by Id",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "Authorization",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "contactId",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/GetContactByIdResponse"
+          },
+          "400": {
+            "$ref": "#/components/responses/errorBadRequesResponse"
+          },
+          "401": {
+            "description": "Not authorized"
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Contacts"],
+        "summary": "Delete contact",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "Authorization",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "contactId",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Contact deleted"
+          },
+          "400": {
+            "$ref": "#/components/responses/errorBadRequesResponse"
+          },
+          "401": {
+            "description": "Not authorized"
+          }
+        }
+      },
+      "put": {
+        "tags": ["Contacts"],
+        "summary": "Update contact",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "Authorization",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "contactId",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/UpdateContactResponse"
+          },
+          "400": {
+            "$ref": "#/components/responses/errorBadRequesResponse"
+          },
+          "401": {
+            "description": "Not authorized"
+          }
+        }
+      }
+    },
+    "/contacts/{contactId}/favorite": {
+      "patch": {
+        "tags": ["Contacts"],
+        "summary": "Update contact",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "Authorization",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "contactId",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/UpdateStatusContactResponse"
+          },
+          "400": {
+            "$ref": "#/components/responses/errorBadRequesResponse"
+          },
+          "401": {
+            "description": "Not authorized"
           }
         }
       }
     }
   },
   "components": {
-    "schemas": null,
     "requestBodies": {
       "RegisterUser": {
         "description": "Registration request parameters",
@@ -281,7 +489,34 @@
               "type": "object",
               "properties": {
                 "avatarURL": {
-                  "type": "file"
+                  "description": "file"
+                }
+              }
+            }
+          }
+        }
+      },
+      "AddContactRequest": {
+        "required": true,
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "description": "User's name",
+                  "example": "User"
+                },
+                "email": {
+                  "type": "string",
+                  "description": "User's email",
+                  "format": "email"
+                },
+                "phone": {
+                  "type": "string",
+                  "description": "User's phone number",
+                  "example": 380444000000
                 }
               }
             }
@@ -458,6 +693,168 @@
             }
           }
         }
+      },
+      "GetListContactsResponse": {
+        "description": "Successful operation",
+        "content": {
+          "aplication/json": {
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "_id": {
+                    "type": "string",
+                    "description": "id for contact",
+                    "example": "65fc1cb225541de40f2d5ef4"
+                  },
+                  "name": {
+                    "type": "string",
+                    "description": "contact's name",
+                    "example": "User"
+                  },
+                  "email": {
+                    "type": "string",
+                    "description": "contact's email",
+                    "format": "email"
+                  },
+                  "phone": {
+                    "type": "string",
+                    "description": "contact's phone",
+                    "example": 380444000000
+                  },
+                  "favorite": {
+                    "type": "boolean",
+                    "example": false
+                  },
+                  "owner": {
+                    "type": "object",
+                    "properties": {
+                      "_id": {
+                        "type": "string",
+                        "description": "id for user",
+                        "example": "65fc149f25541de40f2d5ee3"
+                      },
+                      "email": {
+                        "type": "string",
+                        "description": "contact's email",
+                        "format": "email"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "AddContactResponse": {
+        "description": "New contact created",
+        "content": {
+          "aplication/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "description": "contact's name",
+                  "example": "User"
+                },
+                "email": {
+                  "type": "string",
+                  "description": "contact's email",
+                  "format": "email"
+                },
+                "phone": {
+                  "type": "string",
+                  "description": "contact's phone",
+                  "example": 380444000000
+                },
+                "favorite": {
+                  "type": "boolean",
+                  "example": false
+                },
+                "owner": {
+                  "type": "string",
+                  "description": "id for user",
+                  "example": "65fc149f25541de40f2d5ee3"
+                },
+                "_id": {
+                  "type": "string",
+                  "description": "id for contact",
+                  "example": "65fc1cb225541de40f2d5ef4"
+                },
+                "createdAt": {
+                  "type": "string",
+                  "description": "date for creating",
+                  "format": "date-time"
+                },
+                "updateAt": {
+                  "type": "string",
+                  "description": "date for updating",
+                  "format": "date-time"
+                }
+              }
+            }
+          }
+        }
+      },
+      "GetContactByIdResponse": {
+        "description": "Successful operation",
+        "content": {
+          "aplication/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "_id": {
+                  "type": "string",
+                  "description": "id for contact",
+                  "example": "65fc1cb225541de40f2d5ef4"
+                },
+                "name": {
+                  "type": "string",
+                  "description": "contact's name",
+                  "example": "User"
+                },
+                "email": {
+                  "type": "string",
+                  "description": "contact's email",
+                  "format": "email"
+                },
+                "phone": {
+                  "type": "string",
+                  "description": "contact's phone",
+                  "example": 380444000000
+                },
+                "favorite": {
+                  "type": "boolean",
+                  "example": false
+                },
+                "owner": {
+                  "type": "string",
+                  "description": "id for user",
+                  "example": "65fc149f25541de40f2d5ee3"
+                },
+                "createdAt": {
+                  "type": "string",
+                  "description": "date for creating",
+                  "format": "date-time"
+                },
+                "updateAt": {
+                  "type": "string",
+                  "description": "date for updating",
+                  "format": "date-time"
+                }
+              }
+            }
+          }
+        }
+      },
+      "UpdateContactResponse": {
+        "$ref": "#/components/responses/GetContactByIdResponse"
+      },
+      "UpdateStatusContactResponse": {
+        "$ref": "#/components/responses/GetContactByIdResponse"
       }
     },
     "securitySchemes": {
