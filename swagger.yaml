@@ -2,7 +2,7 @@ openapi: 3.0.3
 info:
   version: 1.0.0
   title: Phonecontacts API
-  description: Swagger to work with the Goose Track backend.
+  description: Swagger to work with the Phonecontact backend.
 # consumes:
 #   - application/json
 # produces:
@@ -271,7 +271,43 @@ paths:
           description: Not authorized
       
 components:
-  # schemas:
+  schemas:
+    User:
+      type: object
+      required:
+        - password
+        - email
+        - verificationToken
+      properties:
+        password:
+          type: string
+          description: User password
+          minLength: 6
+        email:
+          type: string
+          # format: email
+          pattern: /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/
+          description: User email
+        subscription: 
+          type: string
+          default: starter
+          description: starter, pro or business
+        token: 
+          type: string
+          default: ""
+          description: Backend-generated token
+        verify:
+          type: boolean
+          default: false
+          description: changes to "true" after verification
+        verificationToken:
+          type: string
+        avatarURL: 
+          type: string
+          # description: 
+          
+          
+          
   requestBodies:
     RegisterUser:
       description: Registration request parameters

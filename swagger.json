@@ -3,7 +3,7 @@
   "info": {
     "version": "1.0.0",
     "title": "Phonecontacts API",
-    "description": "Swagger to work with the Goose Track backend."
+    "description": "Swagger to work with the Phonecontact backend."
   },
   "servers": [
     {
@@ -21,7 +21,9 @@
   "paths": {
     "/users/register": {
       "post": {
-        "tags": ["Users"],
+        "tags": [
+          "Users"
+        ],
         "summary": "Creat a new user",
         "requestBody": {
           "$ref": "#/components/requestBodies/RegisterUser"
@@ -41,7 +43,9 @@
     },
     "/users/login": {
       "post": {
-        "tags": ["Users"],
+        "tags": [
+          "Users"
+        ],
         "summary": "Login user",
         "requestBody": {
           "$ref": "#/components/requestBodies/LoginUser"
@@ -61,7 +65,9 @@
     },
     "/users/logout": {
       "post": {
-        "tags": ["Users"],
+        "tags": [
+          "Users"
+        ],
         "summary": "Logout user",
         "parameters": [
           {
@@ -90,7 +96,9 @@
     },
     "/users/verify": {
       "post": {
-        "tags": ["Users"],
+        "tags": [
+          "Users"
+        ],
         "summary": "Send verification email",
         "requestBody": {
           "$ref": "#/components/requestBodies/ReturnVerify"
@@ -107,7 +115,9 @@
     },
     "/users/verify/{verificationToken}": {
       "get": {
-        "tags": ["Users"],
+        "tags": [
+          "Users"
+        ],
         "summary": "New user verification",
         "parameters": [
           {
@@ -131,7 +141,9 @@
     },
     "/users/current": {
       "get": {
-        "tags": ["Users"],
+        "tags": [
+          "Users"
+        ],
         "summary": "Get current user info",
         "parameters": [
           {
@@ -160,7 +172,9 @@
     },
     "/users/avatars": {
       "patch": {
-        "tags": ["Users"],
+        "tags": [
+          "Users"
+        ],
         "summary": "Update user avatar",
         "parameters": [
           {
@@ -197,7 +211,9 @@
     },
     "/contacts": {
       "get": {
-        "tags": ["Contacts"],
+        "tags": [
+          "Contacts"
+        ],
         "summary": "Get list of contacts",
         "parameters": [
           {
@@ -224,7 +240,9 @@
         }
       },
       "post": {
-        "tags": ["Contacts"],
+        "tags": [
+          "Contacts"
+        ],
         "summary": "Add contact",
         "parameters": [
           {
@@ -259,7 +277,9 @@
     },
     "/contacts/{contactId}": {
       "get": {
-        "tags": ["Contacts"],
+        "tags": [
+          "Contacts"
+        ],
         "summary": "Get contact by Id",
         "parameters": [
           {
@@ -297,7 +317,9 @@
         }
       },
       "delete": {
-        "tags": ["Contacts"],
+        "tags": [
+          "Contacts"
+        ],
         "summary": "Delete contact",
         "parameters": [
           {
@@ -335,7 +357,9 @@
         }
       },
       "put": {
-        "tags": ["Contacts"],
+        "tags": [
+          "Contacts"
+        ],
         "summary": "Update contact",
         "parameters": [
           {
@@ -375,7 +399,9 @@
     },
     "/contacts/{contactId}/favorite": {
       "patch": {
-        "tags": ["Contacts"],
+        "tags": [
+          "Contacts"
+        ],
         "summary": "Update contact",
         "parameters": [
           {
@@ -415,6 +441,49 @@
     }
   },
   "components": {
+    "schemas": {
+      "User": {
+        "type": "object",
+        "required": [
+          "password",
+          "email",
+          "verificationToken"
+        ],
+        "properties": {
+          "password": {
+            "type": "string",
+            "description": "User password",
+            "minLength": 6
+          },
+          "email": {
+            "type": "string",
+            "pattern": "/^\\w+([.-]?\\w+)*@\\w+([.-]?\\w+)*(\\.\\w{2,3})+$/",
+            "description": "User email"
+          },
+          "subscription": {
+            "type": "string",
+            "default": "starter",
+            "description": "starter, pro or business"
+          },
+          "token": {
+            "type": "string",
+            "default": "",
+            "description": "Backend-generated token"
+          },
+          "verify": {
+            "type": "boolean",
+            "default": false,
+            "description": "changes to \"true\" after verification"
+          },
+          "verificationToken": {
+            "type": "string"
+          },
+          "avatarURL": {
+            "type": "string"
+          }
+        }
+      }
+    },
     "requestBodies": {
       "RegisterUser": {
         "description": "Registration request parameters",
@@ -423,7 +492,10 @@
           "application/json": {
             "schema": {
               "type": "object",
-              "required": ["email", "password"],
+              "required": [
+                "email",
+                "password"
+              ],
               "properties": {
                 "email": {
                   "type": "string",
@@ -447,7 +519,10 @@
           "application/json": {
             "schema": {
               "type": "object",
-              "required": ["email", "password"],
+              "required": [
+                "email",
+                "password"
+              ],
               "properties": {
                 "email": {
                   "type": "string",
