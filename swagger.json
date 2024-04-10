@@ -1,7 +1,7 @@
 {
   "openapi": "3.0.3",
   "info": {
-    "version": "1.0.0",
+    "version": "1.0.1",
     "title": "Phonecontacts API",
     "description": "Swagger to work with the Phonecontact backend."
   },
@@ -446,8 +446,7 @@
         "type": "object",
         "required": [
           "password",
-          "email",
-          "verificationToken"
+          "email"
         ],
         "properties": {
           "password": {
@@ -476,10 +475,42 @@
             "description": "changes to \"true\" after verification"
           },
           "verificationToken": {
-            "type": "string"
+            "type": "string",
+            "description": "Backend-generated verificationToken"
           },
           "avatarURL": {
-            "type": "string"
+            "type": "string",
+            "description": "Backend-generated avatar"
+          }
+        },
+        "example": {}
+      },
+      "Contact": {
+        "type": "object",
+        "required": [
+          "name"
+        ],
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "contact name"
+          },
+          "email": {
+            "type": "string",
+            "pattern": "/^\\w+([.-]?\\w+)*@\\w+([.-]?\\w+)*(\\.\\w{2,3})+$/",
+            "description": "contact email"
+          },
+          "phone": {
+            "type": "string",
+            "description": "contact phone"
+          },
+          "favorite": {
+            "type": "boolean",
+            "default": false
+          },
+          "owner": {
+            "type": "objectId",
+            "description": "owner Id"
           }
         }
       }

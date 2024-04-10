@@ -1,12 +1,8 @@
 openapi: 3.0.3
 info:
-  version: 1.0.0
+  version: 1.0.1
   title: Phonecontacts API
   description: Swagger to work with the Phonecontact backend.
-# consumes:
-#   - application/json
-# produces:
-#   - application/json
 servers:
   - url: http://localhost:3000/api
 tags:
@@ -71,7 +67,6 @@ paths:
           description: Verification email sent
         '400':
           description: "missing required field email || Verification has already been passed"
-          
   /users/verify/{verificationToken}:
     get:
       tags:
@@ -88,7 +83,6 @@ paths:
           description: Verification successful
         '401':
           description: User not found
-        
   /users/current:
     get:
       tags:
@@ -170,7 +164,6 @@ paths:
           $ref: '#/components/responses/errorBadRequesResponse'
         '401':
           description: Not authorized
-  
   /contacts/{contactId}:
     get:
       tags:
@@ -277,7 +270,6 @@ components:
       required:
         - password
         - email
-        - verificationToken
       properties:
         password:
           type: string
@@ -285,7 +277,6 @@ components:
           minLength: 6
         email:
           type: string
-          # format: email
           pattern: /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/
           description: User email
         subscription: 
@@ -302,12 +293,32 @@ components:
           description: changes to "true" after verification
         verificationToken:
           type: string
+          description: Backend-generated verificationToken
         avatarURL: 
           type: string
-          # description: 
-          
-          
-          
+          description: Backend-generated avatar
+      example: {}
+    Contact:
+      type: object
+      required: 
+        - name
+      properties:
+        name: 
+          type: string
+          description: contact name
+        email: 
+          type: string
+          pattern: /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/
+          description: contact email
+        phone:
+          type: string
+          description: contact phone
+        favorite: 
+          type: boolean
+          default: false
+        owner: 
+          type: objectId
+          description: owner Id
   requestBodies:
     RegisterUser:
       description: Registration request parameters
