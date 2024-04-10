@@ -8,6 +8,9 @@
   "servers": [
     {
       "url": "http://localhost:3000/api"
+    },
+    {
+      "url": "https://nodejs-rest-api-mrbs.onrender.com/api"
     }
   ],
   "tags": [
@@ -21,9 +24,7 @@
   "paths": {
     "/users/register": {
       "post": {
-        "tags": [
-          "Users"
-        ],
+        "tags": ["Users"],
         "summary": "Creat a new user",
         "requestBody": {
           "$ref": "#/components/requestBodies/RegisterUser"
@@ -43,9 +44,7 @@
     },
     "/users/login": {
       "post": {
-        "tags": [
-          "Users"
-        ],
+        "tags": ["Users"],
         "summary": "Login user",
         "requestBody": {
           "$ref": "#/components/requestBodies/LoginUser"
@@ -65,9 +64,7 @@
     },
     "/users/logout": {
       "post": {
-        "tags": [
-          "Users"
-        ],
+        "tags": ["Users"],
         "summary": "Logout user",
         "parameters": [
           {
@@ -96,9 +93,7 @@
     },
     "/users/verify": {
       "post": {
-        "tags": [
-          "Users"
-        ],
+        "tags": ["Users"],
         "summary": "Send verification email",
         "requestBody": {
           "$ref": "#/components/requestBodies/ReturnVerify"
@@ -115,9 +110,7 @@
     },
     "/users/verify/{verificationToken}": {
       "get": {
-        "tags": [
-          "Users"
-        ],
+        "tags": ["Users"],
         "summary": "New user verification",
         "parameters": [
           {
@@ -141,9 +134,7 @@
     },
     "/users/current": {
       "get": {
-        "tags": [
-          "Users"
-        ],
+        "tags": ["Users"],
         "summary": "Get current user info",
         "parameters": [
           {
@@ -172,9 +163,7 @@
     },
     "/users/avatars": {
       "patch": {
-        "tags": [
-          "Users"
-        ],
+        "tags": ["Users"],
         "summary": "Update user avatar",
         "parameters": [
           {
@@ -211,9 +200,7 @@
     },
     "/contacts": {
       "get": {
-        "tags": [
-          "Contacts"
-        ],
+        "tags": ["Contacts"],
         "summary": "Get list of contacts",
         "parameters": [
           {
@@ -240,9 +227,7 @@
         }
       },
       "post": {
-        "tags": [
-          "Contacts"
-        ],
+        "tags": ["Contacts"],
         "summary": "Add contact",
         "parameters": [
           {
@@ -277,9 +262,7 @@
     },
     "/contacts/{contactId}": {
       "get": {
-        "tags": [
-          "Contacts"
-        ],
+        "tags": ["Contacts"],
         "summary": "Get contact by Id",
         "parameters": [
           {
@@ -317,9 +300,7 @@
         }
       },
       "delete": {
-        "tags": [
-          "Contacts"
-        ],
+        "tags": ["Contacts"],
         "summary": "Delete contact",
         "parameters": [
           {
@@ -357,9 +338,7 @@
         }
       },
       "put": {
-        "tags": [
-          "Contacts"
-        ],
+        "tags": ["Contacts"],
         "summary": "Update contact",
         "parameters": [
           {
@@ -399,9 +378,7 @@
     },
     "/contacts/{contactId}/favorite": {
       "patch": {
-        "tags": [
-          "Contacts"
-        ],
+        "tags": ["Contacts"],
         "summary": "Update contact",
         "parameters": [
           {
@@ -444,11 +421,12 @@
     "schemas": {
       "User": {
         "type": "object",
-        "required": [
-          "password",
-          "email"
-        ],
+        "required": ["password", "email"],
         "properties": {
+          "_id": {
+            "type": "string",
+            "description": "Backend-generated userId"
+          },
           "password": {
             "type": "string",
             "description": "User password",
@@ -487,10 +465,12 @@
       },
       "Contact": {
         "type": "object",
-        "required": [
-          "name"
-        ],
+        "required": ["name"],
         "properties": {
+          "_id": {
+            "type": "string",
+            "description": "Backend-generated contactId"
+          },
           "name": {
             "type": "string",
             "description": "contact name"
@@ -523,10 +503,7 @@
           "application/json": {
             "schema": {
               "type": "object",
-              "required": [
-                "email",
-                "password"
-              ],
+              "required": ["email", "password"],
               "properties": {
                 "email": {
                   "type": "string",
@@ -550,10 +527,7 @@
           "application/json": {
             "schema": {
               "type": "object",
-              "required": [
-                "email",
-                "password"
-              ],
+              "required": ["email", "password"],
               "properties": {
                 "email": {
                   "type": "string",

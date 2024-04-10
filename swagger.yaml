@@ -5,6 +5,7 @@ info:
   description: Swagger to work with the Phonecontact backend.
 servers:
   - url: http://localhost:3000/api
+  - url: https://nodejs-rest-api-mrbs.onrender.com/api
 tags:
   - name: Users
   - name: Contacts
@@ -271,6 +272,9 @@ components:
         - password
         - email
       properties:
+        _id:
+          type: string
+          description: Backend-generated userId
         password:
           type: string
           description: User password
@@ -303,6 +307,9 @@ components:
       required: 
         - name
       properties:
+        _id:
+          type: string
+          description: Backend-generated contactId
         name: 
           type: string
           description: contact name
@@ -317,7 +324,7 @@ components:
           type: boolean
           default: false
         owner: 
-          type: objectId
+          type: string
           description: owner Id
   requestBodies:
     RegisterUser:
