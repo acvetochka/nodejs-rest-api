@@ -2,6 +2,8 @@
 
 Documentation: [Contact API Swagger](https://contacts-api-fkik.onrender.com/api-docs/)
 
+<a href="https://contacts-api-fkik.onrender.com/api-docs/" target="_blank">Contact API Swagger</a>
+
 
 ### Команди:
 
