@@ -4,6 +4,7 @@ const { nanoid } = require("nanoid");
 
 const { User } = require("../../models/user");
 const { HttpError, sendEmail, verifyEmail } = require("../../helpers");
+const loginUser = require("./loginUser");
 
 const registerUser = async (req, res) => {
   const { name, email, password } = req.body;
@@ -19,8 +20,13 @@ const registerUser = async (req, res) => {
 
   const result = await User.create({ ...req.body, password: hash, verificationToken });
   await sendEmail(verifyEmail(email, verificationToken));
+
+  const logUser = await loginUser(req.body)
+  const {token} = logUser;
+  
   res.status(201).json({
     user: {
+      token,
       name,
       email,
       subscription: result.subscription,
