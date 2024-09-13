@@ -6,7 +6,7 @@ const { User } = require("../../models/user");
 const { HttpError, sendEmail, verifyEmail } = require("../../helpers");
 
 const registerUser = async (req, res) => {
-  const { email, password } = req.body;
+  const { name, email, password } = req.body;
   const hash = await bcrypt.hash(password, 10);
   const verificationToken = nanoid();
   const user = await User.findOne({ email });
@@ -21,6 +21,7 @@ const registerUser = async (req, res) => {
   await sendEmail(verifyEmail(email, verificationToken));
   res.status(201).json({
     user: {
+      name,
       email,
       subscription: result.subscription,
       avatarURL,

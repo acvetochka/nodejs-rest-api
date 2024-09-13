@@ -28,6 +28,7 @@ const loginUser = async (req, res) => {
   res.status(200).json({
     token,
     user: {
+      name: user.name,
       email,
       subscription: user.subscription,
       avatarURL: user.avatarURL,
