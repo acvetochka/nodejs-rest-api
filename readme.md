@@ -1,6 +1,8 @@
 # Contacts API
 
-Documentation: [Contact API Swagger](https://contacts-api-fkik.onrender.com/api-docs/)
+Backend до додатку [Phonebook](https://github.com/acvetochka/Phonebook)
+
+Documentation: [Contact API Swagger](https://kuznietsova.org/api-docs/)
 
 ### Команди:
 
